@@ -27,6 +27,7 @@
 		if (mysqli_num_rows($result) == 1) {
 			$_SESSION['message'] = "You are now logged in";
 			$_SESSION['username'] = $username;
+			$_SESSION['loggedIn'] = TRUE;
 			header("location: index.php"); // redirect to home page
 		} else {
 			$_SESSION['message'] = "Username/password combination incorrect";

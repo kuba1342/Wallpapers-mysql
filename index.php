@@ -21,11 +21,13 @@
 			unset($_SESSION['message']);
 		}
 		
-		if (session_status() === PHP_SESSION_NONE) {
+		if (!(isset($_SESSION['username']) && $_SESSION['username'] != '')) {
+			echo "<a> Please log in </a>";
+		} else {
 			echo "<div>";
 			echo "<a href = 'logout.php'>Logout</a>";
 			echo "</div>";
-		} 
+		}
 	?>
 	
 	<!--<div>
