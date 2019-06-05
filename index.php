@@ -55,6 +55,11 @@
 				Wallpapers
 			</a>
 		</li>
+		<li>
+			<a href = "upload_image.php">
+				Upload
+			</a>
+		</li>
 	</ul>
 </div>
 </body>

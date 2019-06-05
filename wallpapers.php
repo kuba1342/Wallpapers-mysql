@@ -24,7 +24,14 @@ if ($mysqli->connect_errno) {
 <div class = "header">
 	<div>
 		<h4>
-			Welcome <?php echo $_SESSION['username']; ?>
+			Welcome 
+			<?php
+				if (!(isset($_SESSION['username']) && $_SESSION['username'] != '')) {
+					
+				} else {
+					echo $_SESSION['username']; 
+				}
+			?>
 		</h4>
 	</div>
 	<ul>
