@@ -24,15 +24,23 @@ if ($mysqli->connect_errno) {
 <div class = "header">
 	<div>
 		<h4>
-			Welcome 
+			Welcome <?php 
+						if (!(isset($_SESSION['username']) && $_SESSION['username'] != '')) {
+			
+						} else {
+							echo $_SESSION['username'];;
+						}
+					?>
+		</h4>
 			<?php
 				if (!(isset($_SESSION['username']) && $_SESSION['username'] != '')) {
-					
+			
 				} else {
-					echo $_SESSION['username']; 
+					echo "<div>";
+					echo "<a href = 'logout.php'>Logout</a>";
+					echo "</div>";
 				}
 			?>
-		</h4>
 	</div>
 	<ul>
 		<li>
@@ -46,9 +54,25 @@ if ($mysqli->connect_errno) {
 			</a>
 		</li>
 		<li>
+			<a href = "register.php">
+				Registration
+			</a>
+		</li>
+		<li>
 			<a href = "wallpapers.php">
 				Wallpapers
 			</a>
+		</li>
+		<li>
+			<?php
+				if (!(isset($_SESSION['username']) && $_SESSION['username'] != '')) {
+					echo "Please log in to upload files";
+				} else {
+					echo "<a href = 'upload_image.php'>";
+					echo "Upload";
+					echo "</a>";	
+				}
+			?>
 		</li>
 	</ul>
 </div>

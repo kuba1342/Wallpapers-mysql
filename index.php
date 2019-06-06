@@ -29,10 +29,7 @@
 			echo "</div>";
 		}
 	?>
-	
-	<!--<div>
-		<a href = "logout.php">Logout</a>
-	</div>-->
+
 	
 	<ul>
 		<li>
@@ -56,9 +53,15 @@
 			</a>
 		</li>
 		<li>
-			<a href = "upload_image.php">
-				Upload
-			</a>
+			<?php
+				if (!(isset($_SESSION['username']) && $_SESSION['username'] != '')) {
+					echo "Please log in to upload files";
+				} else {
+					echo "<a href = 'upload_image.php'>";
+					echo "Upload";
+					echo "</a>";	
+				}
+			?>
 		</li>
 	</ul>
 </div>

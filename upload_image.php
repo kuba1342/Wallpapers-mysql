@@ -23,7 +23,12 @@
 		list($width, $height, $type, $attr) = getimagesize($_FILES['image']['tmp_name']);
 		$display = 0;
 		$image = "./grafika/".$_FILES['image']['name'];
-		$sql = "INSERT INTO tapety (obraz, wysokosc, szerokosc, wyswietlenia) VALUES ('$image', '$height', '$width', '$display')";
+		$sqlUserID = "SELECT idu FROM uzytkownicy where login='" . $_SESSION['username'] . "'";
+		$result = mysqli_query($mysqli, $sqlUserID);
+		// spr czy wynik jest niepusty
+		$row = $result->fetch_row();
+		$userID = $row[0]; // to jest nasz int
+		$sql = "INSERT INTO tapety (obraz, wysokosc, szerokosc, wyswietlenia, u_id) VALUES ('$image', '$height', '$width', '$display', '$userID')";
 		mysqli_query($mysqli, $sql); // stores submitted data into table: tapety
 		
 		// move uploaded image into folder: grafika
