@@ -19,6 +19,11 @@
 		
 		$msg = "";
 		
+		// car details
+		$brand = $mysqli->real_escape_string($_POST['brand']);
+		$model = $mysqli->real_escape_string($_POST['model']);
+		$year = $mysqli->real_escape_string($_POST['year']);
+		
 		// get submitted data from the form
 		list($width, $height, $type, $attr) = getimagesize($_FILES['image']['tmp_name']);
 		$display = 0;
@@ -30,6 +35,29 @@
 		$userID = $row[0]; // to jest nasz int
 		$sql = "INSERT INTO tapety (obraz, wysokosc, szerokosc, wyswietlenia, u_id) VALUES ('$image', '$height', '$width', '$display', '$userID')";
 		mysqli_query($mysqli, $sql); // stores submitted data into table: tapety
+		
+		// get wallpaper's ID
+		$sqlWallID = "SELECT idt from tapety where obraz = '".$target."'";
+		$resultWallID = mysqli_query($mysqli, $sqlWallID);
+		$rowWallID = $resultWallID->fetch_row();
+		
+		// if car doesnt exist add it to table: samochody
+		$sqlModel = "SELECT model FROM samochody WHERE model = '".$model."' AND rocznik = '".$year."'";
+		$modelResult = mysqli_query($mysqli, $sqlModel);
+		$row2 = $modelResult->fetch_row();
+		if ($row2[0] == '') {
+			$sqlInsertCar = "INSERT INTO samochody (model, marka, rocznik) VALUES ('$model', '$brand', '$year')";
+			mysqli_query($mysqli, $sqlInsertCar); // stores submitted car data into table: samochody
+		}
+		
+		// get car's ID
+		$sqlCarID = "SELECT ids FROM samochody where model = '".$model."' AND rocznik = '".$year."'";
+		$resultCarID = mysqli_query($mysqli, $sqlCarID);
+		$rowCarID = $resultCarID->fetch_row();
+			
+		// put details into table: detal_tapeta
+		$sqlDetails = "INSERT INTO detal_tapeta (t_id, s_id) VALUES ('$rowWallID[0]', '$rowCarID[0]')";
+		mysqli_query($mysqli, $sqlDetails);
 		
 		// move uploaded image into folder: grafika
 		if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
@@ -55,9 +83,20 @@
 			<div>
 				<input type="file" name="image">
 			</div>
-			<div>
-				<!--<textarea name="text"></textarea>-->
-			</div>
+			<table>
+			<tr>
+				<td>Brand: </td>
+				<td><input type="text" name="brand" class="textInput"></td>
+			</tr>
+			<tr>
+				<td>Model: </td>
+				<td><input type="text" name="model" class="textInput"></td>
+			</tr>
+			<tr>
+				<td>Production Year: </td>
+				<td><input type="text" name="year" class="textInput"></td>
+			</tr>
+		</table>
 			<div>
 				<input type="submit" name="upload" value="Upload Image">
 			</div>
