@@ -101,7 +101,6 @@ if(isset($_POST['removeWallpaper'])) {
 			echo "<input type='submit' name='removeWallpaper' id='".$row['idt']."' value='Delete'>";
 			echo "<input type='hidden' name='test' id='".$row['idt']."' value='".$row['idt']."'>";
 			echo "</div>";
-			echo "</form>";
 			echo "</td></tr>";
 			
 			// Add car details
@@ -119,9 +118,10 @@ if(isset($_POST['removeWallpaper'])) {
 					echo "<td><input type='text' name='year' class='textInput'></td>";
 				echo "</tr>";
 				echo "<div>";
-				echo "<input type='submit' name='upload' value='Upload Image'>";
+				echo "<input type='submit' name='upload' value='Upload'>";
 				echo "</div>";
 			echo "</table>";
+			echo "</form>";
 		}
 		echo "</table>";
 		
@@ -135,6 +135,40 @@ if(isset($_POST['removeWallpaper'])) {
 			header("location: wallpapers.php");
 		}
 		
+		// Adding car details
+		if(isset($_POST['upload'])) {
+			if(!isset($_SESSION)) {
+				session_start();
+			}
+			$WallID = $_POST['test'];
+		
+			// car details
+			$brand = $mysqli->real_escape_string($_POST['brand']);
+			$model = $mysqli->real_escape_string($_POST['model']);
+			$year = $mysqli->real_escape_string($_POST['year']);
+		
+			// if car doesnt exist add it to table: samochody
+			$sqlModel = "SELECT model FROM samochody WHERE model = '".$model."' AND rocznik = '".$year."'";
+			$modelResult = mysqli_query($mysqli, $sqlModel);
+			$row2 = $modelResult->fetch_row();
+			if ($row2[0] == '') {
+				echo "<a> Nie ma! </a>";
+				$sqlInsertCar = "INSERT INTO samochody (model, marka, rocznik) VALUES ('$model', '$brand', '$year')";
+				mysqli_query($mysqli, $sqlInsertCar); // stores submitted car data into table: samochody
+			}
+			
+			// get car's ID
+			$sqlCarID = "SELECT ids FROM samochody where model = '".$model."' AND rocznik = '".$year."'";
+			$resultCarID = mysqli_query($mysqli, $sqlCarID);
+			$rowCarID = $resultCarID->fetch_row();
+			
+			// put details into table: detal_tapeta
+			$sqlDetails = "INSERT INTO detal_tapeta (t_id, s_id) VALUES ('$WallID', '$rowCarID[0]')";
+			echo "$sqlDetails";
+			mysqli_query($mysqli, $sqlDetails);
+			
+			header("location: wallpapers.php");
+		}
 	?>
 	
 	<table>
