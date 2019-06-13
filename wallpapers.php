@@ -19,6 +19,13 @@ if ($mysqli->connect_errno) {
 } else {
     echo "Connected" . "\n";
 }
+
+if(isset($_POST['removeWallpaper'])) {
+	if(!isset($_SESSION)) {
+		session_start();
+	}
+}
+
 ?>
 
 <div class = "header">
@@ -88,21 +95,26 @@ if ($mysqli->connect_errno) {
 			echo $row["szerokosc"];
 			echo "x";
 			echo $row["wysokosc"];
-			echo "</td></tr>";
-			echo "<form method="'post'" action="'user_details.php'" enctype="'multipart/form-data'">";
-			echo "<input type="'hidden'" name="'size'" value="'1000000'">";
+			echo "<form method='post' action='wallpapers.php' enctype='multipart/form-data'>";
+			echo "<input type='hidden' name='size' value='1000000'>";
 			echo "<div>";
-			echo "<input type="'submit'" name="'removeWallpaper'" value="'Usun tapete'">";
+			echo "<input type='submit' name='removeWallpaper' value='".$row['idt']."'>";
+			echo "</div>";
+			echo "</form>";
+			echo "</td></tr>";
 		}
 		echo "</table>";
+		
+		if(isset($_POST['removeWallpaper'])) {
+			if(!isset($_SESSION)) {
+				session_start();
+			}
+			$WallID = $_POST['removeWallpaper'];
+			$sqlDelete = "DELETE from tapety where idt='$WallID'"; 
+			mysqli_query($mysqli, $sqlDelete);
+		}
+		
 	?>
-	
-				
-			
-				<input type="submit" name="removeWallpaper" value="Usun tapete">
-			</div>
-		</form>
-	
 	<table>
 		<tr>
 			<td>
