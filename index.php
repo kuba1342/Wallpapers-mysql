@@ -58,6 +58,11 @@
 			</a>
 		</li>
 		<li>
+			<a href = "search_user.php">
+				Subskrybuj
+			</a>
+		</li>
+		<li>
 			<?php
 				if (!(isset($_SESSION['username']) && $_SESSION['username'] != '')) {
 					echo "Please log in to upload files";

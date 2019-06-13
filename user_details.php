@@ -64,5 +64,10 @@
 			</div>
 		</form>
 	</div>
+	<div>
+		<a href = "subskrybenci.php">
+			Subskrybenci
+		</a>
+	</div>
 </body>
 </html>
