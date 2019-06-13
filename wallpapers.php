@@ -98,10 +98,30 @@ if(isset($_POST['removeWallpaper'])) {
 			echo "<form method='post' action='wallpapers.php' enctype='multipart/form-data'>";
 			echo "<input type='hidden' name='size' value='1000000'>";
 			echo "<div>";
-			echo "<input type='submit' name='removeWallpaper' value='".$row['idt']."'>";
+			echo "<input type='submit' name='removeWallpaper' id='".$row['idt']."' value='Delete'>";
+			echo "<input type='hidden' name='test' id='".$row['idt']."' value='".$row['idt']."'>";
 			echo "</div>";
 			echo "</form>";
 			echo "</td></tr>";
+			
+			// Add car details
+			echo "<table>";
+				echo "<tr>";
+					echo "<td> Brand: </td>";
+					echo "<td><input type='text' name='brand' class='textInput'></td>";
+				echo "</tr>";
+				echo "<tr>";
+					echo "<td> Model: </td>";
+					echo "<td><input type='text' name='model' class='textInput'></td>";
+				echo "</tr>";
+				echo "<tr>";
+					echo "<td> Year: </td>";
+					echo "<td><input type='text' name='year' class='textInput'></td>";
+				echo "</tr>";
+				echo "<div>";
+				echo "<input type='submit' name='upload' value='Upload Image'>";
+				echo "</div>";
+			echo "</table>";
 		}
 		echo "</table>";
 		
@@ -109,12 +129,14 @@ if(isset($_POST['removeWallpaper'])) {
 			if(!isset($_SESSION)) {
 				session_start();
 			}
-			$WallID = $_POST['removeWallpaper'];
+			$WallID = $_POST['test'];
 			$sqlDelete = "DELETE from tapety where idt='$WallID'"; 
 			mysqli_query($mysqli, $sqlDelete);
+			header("location: wallpapers.php");
 		}
 		
 	?>
+	
 	<table>
 		<tr>
 			<td>
@@ -123,6 +145,15 @@ if(isset($_POST['removeWallpaper'])) {
 		</tr>
 	</table>
 </div>
+
+<script>
+	function high(id) {
+		<?php
+			$test = id;
+			echo $test;
+		?>
+	}
+</script>
 
 </body>
 </html>
