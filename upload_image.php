@@ -46,6 +46,7 @@
 		$modelResult = mysqli_query($mysqli, $sqlModel);
 		$row2 = $modelResult->fetch_row();
 		if ($row2[0] == '') {
+			//echo "<a> Nie ma! </a>";
 			$sqlInsertCar = "INSERT INTO samochody (model, marka, rocznik) VALUES ('$model', '$brand', '$year')";
 			mysqli_query($mysqli, $sqlInsertCar); // stores submitted car data into table: samochody
 		}
@@ -57,6 +58,7 @@
 			
 		// put details into table: detal_tapeta
 		$sqlDetails = "INSERT INTO detal_tapeta (t_id, s_id) VALUES ('$rowWallID[0]', '$rowCarID[0]')";
+		echo "$sqlDetails";
 		mysqli_query($mysqli, $sqlDetails);
 		
 		// move uploaded image into folder: grafika

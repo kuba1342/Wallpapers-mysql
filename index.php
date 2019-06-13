@@ -63,6 +63,17 @@
 				}
 			?>
 		</li>
+		<li>
+			<?php
+				if (!(isset($_SESSION['username']) && $_SESSION['username'] != '')) {
+					echo "Please log in to see your account's details";
+				} else {
+					echo "<a href = 'user_details.php'>";
+					echo "Account";
+					echo "</a>";	
+				}
+			?>
+		</li>
 	</ul>
 </div>
 </body>

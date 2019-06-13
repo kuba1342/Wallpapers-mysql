@@ -89,9 +89,19 @@ if ($mysqli->connect_errno) {
 			echo "x";
 			echo $row["wysokosc"];
 			echo "</td></tr>";
+			echo "<form method="'post'" action="'user_details.php'" enctype="'multipart/form-data'">";
+			echo "<input type="'hidden'" name="'size'" value="'1000000'">";
+			echo "<div>";
+			echo "<input type="'submit'" name="'removeWallpaper'" value="'Usun tapete'">";
 		}
 		echo "</table>";
 	?>
+	
+				
+			
+				<input type="submit" name="removeWallpaper" value="Usun tapete">
+			</div>
+		</form>
 	
 	<table>
 		<tr>
